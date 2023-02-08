@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-function PizzaBlock({ imageUrl, title, types, sizes, price, category, rating }) {
+function Index({ imageUrl, title, types, sizes, price, category, rating }) {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
-  const typeNames = ['тонкое', 'традиционное'];
+  const typeNames = ['thin', 'standard'];
 
   return (
     <div className="pizza-block">
@@ -26,13 +26,13 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category, rating }) 
               key={index}
               onClick={() => setActiveSize(index)}
               className={activeSize === index ? 'active' : ''}>
-              {size} см
+              {size} cm
             </li>
           ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₽</div>
+        <div className="pizza-block__price">from ${price}</div>
         <button className="button button--outline button--add">
           <svg
             width="12"
@@ -45,7 +45,7 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category, rating }) 
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
+          <span>Add</span>
           <i>0</i>
         </button>
       </div>
@@ -53,4 +53,4 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category, rating }) 
   );
 }
 
-export default PizzaBlock;
+export default Index;

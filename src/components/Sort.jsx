@@ -3,7 +3,7 @@ import { useState } from 'react';
 function Sort() {
   const [isOpen, setOpen] = useState(false);
   const [activeSort, setActiveSort] = useState(0);
-  const sorts = ['популярности', 'цене', 'алфавиту'];
+  const sorts = ['popularity', 'price', 'alphabet'];
   const selectedSort = sorts[activeSort];
 
   const sortOnClick = (index) => {
@@ -25,7 +25,7 @@ function Sort() {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         <span onClick={() => setOpen(!isOpen)}>{selectedSort}</span>
       </div>
       {isOpen && (
