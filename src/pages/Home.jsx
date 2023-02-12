@@ -2,21 +2,24 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Pagination from '../components/Pagination';
+import { SearchContext } from '../App';
 
-function Home({ searchValue }) {
+function Home() {
+  const { searchValue } = useContext(SearchContext);
   const [pizzas, setPizzas] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setLoading] = useState(true);
   const [categoryId, setCategoryId] = useState(0);
   const [sortType, setSortType] = useState({ name: 'popularity', sort: 'rating' });
   const baseUrl = 'https://63e377a3619fce55d4198d8f.mockapi.io';
-  const category = categoryId > 0 ? `category=${categoryId}` : '';
-  const search = searchValue ? `&search=${searchValue}` : '';
-  const page = `&limit=8&page=${currentPage}`;
 
   useEffect(() => {
+    const category = categoryId > 0 ? `category=${categoryId}` : '';
+    const search = searchValue ? `&search=${searchValue}` : '';
+    const page = `&limit=8&page=${currentPage}`;
+
     fetch(`${baseUrl}/pizza?${category}${search}${page}&sortBy=${sortType.sort}&order=desc`)
       .then((data) => data.json())
       .then((json) => {
