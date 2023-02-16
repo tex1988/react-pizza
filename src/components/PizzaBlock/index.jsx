@@ -1,9 +1,24 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addPizza } from '../../redux/slices/cartSlice';
 
-function Index({ imageUrl, title, types, sizes, price, category, rating }) {
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
-  const typeNames = ['thin', 'standard'];
+function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
+  const [activeType, setActiveType] = useState(types[0]);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+  const typeNames = ['standard', 'thin'];
+  const dispatch = useDispatch();
+
+  function onClickAdd() {
+    const pizza = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typeNames[activeType],
+      size: activeSize,
+    };
+    dispatch(addPizza(pizza));
+  }
 
   return (
     <div className="pizza-block-wrapper">
@@ -25,8 +40,8 @@ function Index({ imageUrl, title, types, sizes, price, category, rating }) {
             {sizes.map((size, index) => (
               <li
                 key={index}
-                onClick={() => setActiveSize(index)}
-                className={activeSize === index ? 'active' : ''}>
+                onClick={() => setActiveSize(size)}
+                className={activeSize === size ? 'active' : ''}>
                 {size} cm
               </li>
             ))}
@@ -34,7 +49,7 @@ function Index({ imageUrl, title, types, sizes, price, category, rating }) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">from ${price}</div>
-          <button className="button button--outline button--add">
+          <button onClick={() => onClickAdd()} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
