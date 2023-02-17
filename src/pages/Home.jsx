@@ -21,7 +21,7 @@ function Home() {
 
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const baseUrl = 'https://--63e377a3619fce55d4198d8f.mockapi.io';
+  const baseUrl = 'https://63e377a3619fce55d4198d8f.mockapi.io';
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
