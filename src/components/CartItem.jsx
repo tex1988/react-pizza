@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { addPizza, removePizza } from '../redux/slices/cartSlice';
+import { addPizza, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
 
-function CartItem({ id, imageUrl, title, size, type, name, price, count }) {
+function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count }) {
   const dispatch = useDispatch();
 
   function onClickAdd() {
@@ -25,7 +25,21 @@ function CartItem({ id, imageUrl, title, size, type, name, price, count }) {
       type: type,
       size: size,
     };
-    dispatch(removePizza(pizza))
+    dispatch(removePizza(pizza));
+  }
+
+  function onClickRemoveSamePizzas() {
+    const pizza = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: type,
+      size: size,
+      totalPrice: totalPrice,
+      count: count,
+    };
+    dispatch(removeSamePizzas(pizza));
   }
 
   return (
@@ -40,7 +54,9 @@ function CartItem({ id, imageUrl, title, size, type, name, price, count }) {
         </p>
       </div>
       <div className="cart__item-count">
-        <div onClick={() => onClickRemove()} className="button button--outline button--circle cart__item-count-minus">
+        <div
+          onClick={() => onClickRemove()}
+          className="button button--outline button--circle cart__item-count-minus">
           <svg
             width="10"
             height="10"
@@ -75,10 +91,12 @@ function CartItem({ id, imageUrl, title, size, type, name, price, count }) {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>${price}</b>
+        <b>${totalPrice}</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <div
+          onClick={() => onClickRemoveSamePizzas()}
+          className="button button--outline button--circle">
           <svg
             width="10"
             height="10"

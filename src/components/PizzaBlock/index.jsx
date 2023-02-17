@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPizza } from '../../redux/slices/cartSlice';
 
 function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
+  const [pizzaCount, setPizzaCount] = useState(0);
+  const pizzas = useSelector((state) => state.cart.pizzas);
   const typeNames = ['standard', 'thin'];
   const dispatch = useDispatch();
 
@@ -18,7 +20,17 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
       size: activeSize,
     };
     dispatch(addPizza(pizza));
+    setPizzaCount(getPizzaCount() + 1);
   }
+
+  function getPizzaCount() {
+    const filteredPizzas = pizzas.filter((pizza) => pizza.id === id).map((pizza) => pizza.count);
+    return filteredPizzas.length > 0 ? filteredPizzas.reduce((a, b) => a + b) : 0;
+  }
+
+  useEffect(() => {
+    setPizzaCount(getPizzaCount);
+  }, []);
 
   return (
     <div className="pizza-block-wrapper">
@@ -62,7 +74,7 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
               />
             </svg>
             <span>Add</span>
-            <i>0</i>
+            {pizzaCount > 0 && <i>{pizzaCount}</i>}
           </button>
         </div>
       </div>

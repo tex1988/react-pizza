@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../components/CartItem';
 import { clearPizzas } from '../redux/slices/cartSlice';
+import { Link } from 'react-router-dom';
 
 function Cart() {
   const { pizzas, totalPrice, totalCount } = useSelector((state) => state.cart);
@@ -93,7 +94,7 @@ function Cart() {
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <a href="/" className="button button--outline button--add go-back-btn">
+            <Link to="/" className="button button--outline button--add go-back-btn">
               <svg
                 width="8"
                 height="14"
@@ -109,7 +110,7 @@ function Cart() {
               </svg>
 
               <span>Return</span>
-            </a>
+            </Link>
             <div className="button pay-btn">
               <span>Pay now</span>
             </div>
