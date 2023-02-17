@@ -1,4 +1,4 @@
-import Categories from '../components/Categories';
+import Categories from '../components/CategoriesList';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
@@ -9,6 +9,7 @@ import { setCategoryId, setPage, setFilters } from '../redux/slices/filterSlice'
 import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
+import { categoriesList } from '../components/CategoriesList';
 
 function Home() {
   const { categoryId, sort, currentPage, searchValue } = useSelector((state) => state.filter);
@@ -32,16 +33,21 @@ function Home() {
 
   function fetchPizzas() {
     setLoading(true);
-    const category = categoryId > 0 ? `category=${categoryId}` : '';
-    const search = searchValue ? `&search=${searchValue}` : '';
-    const page = `&limit=8&page=${currentPage}`;
+
+    const params = {};
+    categoryId > 0 && (params.category = categoryId);
+    searchValue && (params.search = searchValue);
+    params.sortBy = sortType;
+    params.limit = 8;
+    params.page = currentPage;
+    params.order = 'desc';
 
     axios
-      .get(`${baseUrl}/pizza?${category}${search}${page}&sortBy=${sortType}&order=desc`)
+      .get(`${baseUrl}/pizza`, { params: params })
       .then((res) => {
-        setPizzas(res.data);
-        setLoading(false);
-      });
+      setPizzas(res.data);
+      setLoading(false);
+    });
   }
 
   useEffect(() => {
@@ -77,7 +83,7 @@ function Home() {
         <Categories value={categoryId} onChangeCategory={onClickCategory} />
         <Sort />
       </div>
-      <h2 className="content__title">All pizzas</h2>
+      <h2 className="content__title">{categoriesList[categoryId]} pizzas</h2>
       <div className="content__items">{isLoading ? skeletons : sortedPizzas}</div>
       <Pagination onChangePage={onChangePage} />
     </div>
