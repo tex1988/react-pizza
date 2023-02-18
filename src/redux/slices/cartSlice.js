@@ -71,10 +71,6 @@ export function selectCart(state) {
   return state.cart;
 }
 
-export function selectCartPurchasePizzas(state) {
-  return state.cart.purchasePizzas;
-}
-
 export const { addPizza, removePizza, removeSamePizzas, clearPizzas } = cartSlice.actions;
 
 export default cartSlice.reducer;

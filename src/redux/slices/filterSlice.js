@@ -36,10 +36,6 @@ export function selectFilter(state) {
   return state.filter;
 }
 
-export function selectFilterSort(state) {
-  return state.filter.sort;
-}
-
 export const { setCategoryId, setSort, setPage, setSearchValue, setFilters } = filterSlice.actions;
 
 export default filterSlice.reducer;

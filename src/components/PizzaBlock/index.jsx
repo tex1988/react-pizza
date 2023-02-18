@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {addPizza, selectCartPurchasePizzas} from '../../redux/slices/cartSlice';
-import {Link} from "react-router-dom";
+import { addPizza, selectCart, selectCartPurchasePizzas } from '../../redux/slices/cartSlice';
+import { Link } from 'react-router-dom';
 
 function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [pizzaCount, setPizzaCount] = useState(0);
-  const purchasePizzas = useSelector(selectCartPurchasePizzas);
+  const { purchasePizzas } = useSelector(selectCart);
   const typeNames = ['standard', 'thin'];
   const dispatch = useDispatch();
 
@@ -25,7 +25,9 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   }
 
   function getPizzaCount() {
-    const filteredPizzas = purchasePizzas.filter((pizza) => pizza.id === id).map((pizza) => pizza.count);
+    const filteredPizzas = purchasePizzas
+      .filter((pizza) => pizza.id === id)
+      .map((pizza) => pizza.count);
     return filteredPizzas.length > 0 ? filteredPizzas.reduce((a, b) => a + b) : 0;
   }
 
@@ -37,7 +39,7 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
         <Link to={`/pizza/${id}`}>
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         </Link>
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
