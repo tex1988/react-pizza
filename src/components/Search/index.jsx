@@ -41,7 +41,7 @@ function Search() {
         placeholder="Search pizza..."
       />
       {value && (
-        <svg
+          <svg
           onClick={onClickClear}
           className={styles.clearIcon}
           viewBox="0 0 20 20"
