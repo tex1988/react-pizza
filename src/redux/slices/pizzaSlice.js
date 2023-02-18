@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseUrl = 'https://63e377a3619fce55d4198d8f.mockapi.io';
+export const baseUrl = 'https://63e377a3619fce55d4198d8f.mockapi.io';
 
 export const fetchPizzas = createAsyncThunk('pizza/fetchPizzas', async (params) => {
   const { data } = await axios.get(`${baseUrl}/pizza`, { params: params });
