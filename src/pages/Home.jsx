@@ -12,21 +12,19 @@ import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
 
 function Home() {
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
-  const sortType = sort.sortType;
+  const { pizzas, status } = useSelector(selectPizzas);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isSearch = useRef(false);
   const isMounted = useRef(false);
+  const sortType = sort.sortType;
 
-  const { pizzas, status } = useSelector(selectPizzas);
-
-  const onClickCategory = (id) => {
+  function onClickCategory(id) {
     dispatch(setCategoryId(id));
-  };
+  }
 
-  const onChangePage = (Number) => {
+  function onChangePage(Number) {
     dispatch(setPage(Number));
-  };
+  }
 
   function getPizzas() {
     const params = {};
@@ -44,15 +42,11 @@ function Home() {
       const params = qs.parse(window.location.search.split('?').slice(-1)[0]);
       const sort = sortList.find((sort) => sort.sortType === params.sortType);
       dispatch(setFilters({ ...params, sort }));
-      isSearch.current = true;
     }
   }, []);
 
   useEffect(() => {
-    if (!isSearch.current) {
-      getPizzas();
-    }
-    isSearch.current = false;
+    getPizzas();
   }, [categoryId, sortType, searchValue, currentPage]);
 
   useEffect(() => {
