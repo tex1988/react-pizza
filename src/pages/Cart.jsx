@@ -4,7 +4,7 @@ import { clearPizzas } from '../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 
 function Cart() {
-  const { pizzas, totalPrice, totalCount } = useSelector((state) => state.cart);
+  const { purchasePizzas, totalPrice, totalCount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   function onEraseClick() {
@@ -80,7 +80,7 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {pizzas.length > 0 && pizzas.map((pizza) => <CartItem key={pizza.id} {...pizza} />)}
+          {purchasePizzas.length > 0 && purchasePizzas.map((pizza) => <CartItem key={pizza.id} {...pizza} />)}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">

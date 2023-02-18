@@ -1,15 +1,14 @@
-import Categories from '../components/CategoriesList';
+import Categories, { categoriesList } from '../components/CategoriesList';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
 import { useEffect, useRef, useState } from 'react';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId, setPage, setFilters } from '../redux/slices/filterSlice';
-import axios from 'axios';
+import { setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { categoriesList } from '../components/CategoriesList';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 function Home() {
   const { categoryId, sort, currentPage, searchValue } = useSelector((state) => state.filter);
@@ -19,9 +18,7 @@ function Home() {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const [pizzas, setPizzas] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const baseUrl = 'https://63e377a3619fce55d4198d8f.mockapi.io';
+  const { pizzas, status } = useSelector((state) => state.pizza);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -31,9 +28,7 @@ function Home() {
     dispatch(setPage(Number));
   };
 
-  function fetchPizzas() {
-    setLoading(true);
-
+  function getPizzas() {
     const params = {};
     categoryId > 0 && (params.category = categoryId);
     searchValue && (params.search = searchValue);
@@ -41,16 +36,7 @@ function Home() {
     params.limit = 8;
     params.page = currentPage;
     params.order = 'desc';
-
-    axios
-      .get(`${baseUrl}/pizza`, { params: params })
-      .then((res) => {
-        setPizzas(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => setLoading(false));
+    dispatch(fetchPizzas(params));
   }
 
   useEffect(() => {
@@ -64,7 +50,7 @@ function Home() {
 
   useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
@@ -87,7 +73,14 @@ function Home() {
         <Sort />
       </div>
       <h2 className="content__title">{categoriesList[categoryId]} pizzas</h2>
-      <div className="content__items">{isLoading ? skeletons : sortedPizzas}</div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>An error occurred &#128577;</h2>
+          <p> Please try again later</p>
+        </div>
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeletons : sortedPizzas}</div>
+      )}
       <Pagination onChangePage={onChangePage} />
     </div>
   );

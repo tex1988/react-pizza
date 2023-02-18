@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   totalPrice: 0,
   totalCount: 0,
-  pizzas: [],
+  purchasePizzas: [],
 };
 
 function getSamePizza(state, action) {
-  return state.pizzas.find(
+  return state.purchasePizzas.find(
     (pizza) => JSON.stringify(pizza, replacer) === JSON.stringify(action.payload, replacer),
   );
 }
@@ -28,9 +28,9 @@ export const cartSlice = createSlice({
         samePizza.count++;
         samePizza.totalPrice += action.payload.price;
       } else {
-        state.pizzas.push(action.payload);
-        state.pizzas[state.pizzas.length - 1].count = 1;
-        state.pizzas[state.pizzas.length - 1].totalPrice = action.payload.price;
+        state.purchasePizzas.push(action.payload);
+        state.purchasePizzas[state.purchasePizzas.length - 1].count = 1;
+        state.purchasePizzas[state.purchasePizzas.length - 1].totalPrice = action.payload.price;
       }
       state.totalPrice = state.totalPrice + action.payload.price;
       state.totalCount++;
@@ -39,7 +39,7 @@ export const cartSlice = createSlice({
     removePizza(state, action) {
       const samePizza = getSamePizza(state, action);
       if (samePizza && samePizza.count === 1) {
-        state.pizzas = state.pizzas.filter((pizza) => pizza.id !== action.payload.id);
+        state.purchasePizzas = state.purchasePizzas.filter((pizza) => pizza.id !== action.payload.id);
       } else {
         samePizza.totalPrice -= samePizza.price;
         samePizza.count--;
@@ -50,7 +50,7 @@ export const cartSlice = createSlice({
 
     removeSamePizzas(state, action) {
       const samePizza = getSamePizza(state, action);
-      state.pizzas = state.pizzas.filter(
+      state.purchasePizzas = state.purchasePizzas.filter(
         (pizza) => JSON.stringify(pizza) !== JSON.stringify(samePizza),
       );
       state.totalPrice -= samePizza.totalPrice;
@@ -58,7 +58,7 @@ export const cartSlice = createSlice({
     },
 
     clearPizzas(state, action) {
-      state.pizzas = [];
+      state.purchasePizzas = [];
       state.totalPrice = 0;
       state.totalCount = 0;
     },

@@ -6,7 +6,7 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [pizzaCount, setPizzaCount] = useState(0);
-  const pizzas = useSelector((state) => state.cart.pizzas);
+  const purchasePizzas = useSelector((state) => state.cart.purchasePizzas);
   const typeNames = ['standard', 'thin'];
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   }
 
   function getPizzaCount() {
-    const filteredPizzas = pizzas.filter((pizza) => pizza.id === id).map((pizza) => pizza.count);
+    const filteredPizzas = purchasePizzas.filter((pizza) => pizza.id === id).map((pizza) => pizza.count);
     return filteredPizzas.length > 0 ? filteredPizzas.reduce((a, b) => a + b) : 0;
   }
 
