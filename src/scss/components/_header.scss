@@ -19,7 +19,7 @@
   }
 
   &__logo {
-    display: flex;
+    overflow-wrap: normal;
 
     img {
       margin-right: 15px;
