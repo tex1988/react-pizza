@@ -18,7 +18,7 @@ function Search() {
   function onChangeInput(event) {
     const value = event.target.value;
     setValue(value);
-    setStateValue(value)
+    setStateValue(value);
   }
 
   const setStateValue = useCallback(

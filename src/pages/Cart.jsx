@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../components/CartItem';
-import { clearPizzas } from '../redux/slices/cartSlice';
+import { clearPizzas, selectCart } from '../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 
 function Cart() {
-  const { purchasePizzas, totalPrice, totalCount } = useSelector((state) => state.cart);
+  const { purchasePizzas, totalPrice, totalCount } = useSelector(selectCart);
   const dispatch = useDispatch();
 
   function onEraseClick() {
@@ -80,13 +80,17 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {purchasePizzas.length > 0 && purchasePizzas.map((pizza) => <CartItem key={pizza.id} {...pizza} />)}
+          {purchasePizzas.length > 0 &&
+            purchasePizzas.map((pizza) => <CartItem key={pizza.id} {...pizza} />)}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
               {' '}
-              Total: <b>{totalCount} pc</b>{' '}
+              Total:{' '}
+              <b>
+                {totalCount} {totalCount > 1 ? 'pcs' : 'pc'}
+              </b>{' '}
             </span>
             <span>
               {' '}

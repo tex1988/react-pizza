@@ -39,7 +39,9 @@ export const cartSlice = createSlice({
     removePizza(state, action) {
       const samePizza = getSamePizza(state, action);
       if (samePizza && samePizza.count === 1) {
-        state.purchasePizzas = state.purchasePizzas.filter((pizza) => pizza.id !== action.payload.id);
+        state.purchasePizzas = state.purchasePizzas.filter(
+          (pizza) => pizza.id !== action.payload.id,
+        );
       } else {
         samePizza.totalPrice -= samePizza.price;
         samePizza.count--;
@@ -64,6 +66,14 @@ export const cartSlice = createSlice({
     },
   },
 });
+
+export function selectCart(state) {
+  return state.cart;
+}
+
+export function selectCartPurchasePizzas(state) {
+  return state.cart.purchasePizzas;
+}
 
 export const { addPizza, removePizza, removeSamePizzas, clearPizzas } = cartSlice.actions;
 

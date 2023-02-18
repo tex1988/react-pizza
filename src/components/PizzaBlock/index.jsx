@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPizza } from '../../redux/slices/cartSlice';
+import {addPizza, selectCartPurchasePizzas} from '../../redux/slices/cartSlice';
 
 function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [pizzaCount, setPizzaCount] = useState(0);
-  const purchasePizzas = useSelector((state) => state.cart.purchasePizzas);
+  const purchasePizzas = useSelector(selectCartPurchasePizzas);
   const typeNames = ['standard', 'thin'];
   const dispatch = useDispatch();
 

@@ -14,7 +14,7 @@ const initialState = {
 };
 
 export const pizzaSlice = createSlice({
-  name: 'filter',
+  name: 'pizza',
   initialState,
   reducers: {
     setPizzas(state, action) {
@@ -36,6 +36,10 @@ export const pizzaSlice = createSlice({
     },
   },
 });
+
+export function selectPizzas(state) {
+  return state.pizza;
+}
 
 export const { setPizzas } = pizzaSlice.actions;
 
