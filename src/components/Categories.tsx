@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 
-type Props = {
+type CategoriesProps = {
   value: number,
   onChangeCategory: (id: number) => void
 }
 
 export const categoriesList: String[] = ['All', 'Meet', 'Vegetarian', 'Grill', 'Spicy', 'Combined'];
 
-function Categories({ value, onChangeCategory }: Props): ReactElement | null {
+function Categories({ value, onChangeCategory }: CategoriesProps): ReactElement | null {
   return (
     <div className="categories">
       <ul>

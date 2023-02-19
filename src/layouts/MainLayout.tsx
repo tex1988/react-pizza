@@ -1,7 +1,8 @@
 import Header from '../components/Header';
 import { Outlet } from 'react-router-dom';
+import { ReactElement } from 'react';
 
-function MainLayout() {
+function MainLayout(): ReactElement | null {
   return (
     <div className="wrapper">
       <Header />
