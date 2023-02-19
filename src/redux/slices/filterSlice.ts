@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SortItem } from '../../components/Sort';
-import { RootState } from '@reduxjs/toolkit/dist/query/core/apiState';
 
 export interface FilterSliceState {
-  categoryId: number,
-  currentSortItem: SortItem,
-  currentPage: number,
-  searchValue: string
-
+  categoryId: number;
+  currentSortItem: SortItem;
+  currentPage: number;
+  searchValue: string;
 }
 
 const initialState = {

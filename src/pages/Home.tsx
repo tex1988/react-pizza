@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, PizzaQueryParams, selectPizzas } from '../redux/slices/pizzaSlice';
 
 function Home(): ReactElement | null {
   const { categoryId, currentSortItem, currentPage, searchValue } = useSelector(selectFilter);
@@ -27,14 +27,14 @@ function Home(): ReactElement | null {
   }
 
   function getPizzas() {
-    const params: any = {};
+    const params: PizzaQueryParams = {
+      sortBy: sortType,
+      limit: 8,
+      page: currentPage,
+      order: 'desc',
+    };
     categoryId > 0 && (params.category = categoryId);
     searchValue && (params.search = searchValue);
-    params.sortBy = sortType;
-    params.limit = 8;
-    params.page = currentPage;
-    params.order = 'desc';
-    // @ts-ignore
     dispatch(fetchPizzas(params));
   }
 

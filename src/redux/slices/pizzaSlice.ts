@@ -3,7 +3,16 @@ import axios from 'axios';
 
 export const baseUrl = 'https://63e377a3619fce55d4198d8f.mockapi.io';
 
-export const fetchPizzas = createAsyncThunk('pizza/fetchPizzas', async (params) => {
+export type PizzaQueryParams = {
+  category?: string;
+  search?: string;
+  sortBy: string;
+  limit: number;
+  page: number;
+  order: string;
+};
+
+export const fetchPizzas = createAsyncThunk('pizza/fetchPizzas', async (params: PizzaQueryParams) => {
   const { data } = await axios.get(`${baseUrl}/pizza`, { params: params });
   return data;
 });
