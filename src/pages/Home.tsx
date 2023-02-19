@@ -1,11 +1,11 @@
 import Categories, { categoriesList } from '../components/Categories';
-import Sort, { sortList } from '../components/Sort';
+import Sort, { SortItem, sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
 import { ReactElement, useEffect, useRef } from 'react';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
+import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
@@ -41,8 +41,9 @@ function Home(): ReactElement | null {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.split('?').slice(-1)[0]);
-      const currentSortItem = sortList.find((sortItem) => sortItem.sortType === params.sortType);
-      dispatch(setFilters({ ...params, currentSortItem }));
+      const _currentSortItem = sortList.find((sortItem) => sortItem.sortType === params.sortType);
+      const currentSortItem: SortItem = _currentSortItem ? _currentSortItem as SortItem : sortList[0]
+      dispatch(setFilters({ ...params, currentSortItem } as FilterSliceState));
     }
   }, []);
 

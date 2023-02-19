@@ -1,57 +1,30 @@
 import { useDispatch } from 'react-redux';
-import { addPizza, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
+import { addPizza, ICartItem, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
 import { ReactElement } from 'react';
 
-type CartItemProps = {
-  id: number;
-  imageUrl: string;
-  title: string;
-  size: number;
-  type: string;
-  price: number;
-  totalPrice: number;
-  count: number;
-};
-
-function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count, }: CartItemProps): ReactElement | null {
+function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count, }: ICartItem): ReactElement | null {
   const dispatch = useDispatch();
+  const cartItem: ICartItem = {
+    id: id,
+    title: title,
+    price: price,
+    imageUrl: imageUrl,
+    type: type,
+    size: size,
+    count: count,
+    totalPrice: totalPrice,
+  };
 
   function onClickAdd(): void {
-    const pizza = {
-      id,
-      title,
-      price,
-      imageUrl,
-      type: type,
-      size: size,
-    };
-    dispatch(addPizza(pizza));
+    dispatch(addPizza(cartItem));
   }
 
   function onClickRemove(): void {
-    const pizza = {
-      id,
-      title,
-      price,
-      imageUrl,
-      type: type,
-      size: size,
-    };
-    dispatch(removePizza(pizza));
+    dispatch(removePizza(cartItem));
   }
 
   function onClickRemoveSamePizzas(): void {
-    const pizza = {
-      id,
-      title,
-      price,
-      imageUrl,
-      type: type,
-      size: size,
-      totalPrice: totalPrice,
-      count: count,
-    };
-    dispatch(removeSamePizzas(pizza));
+    dispatch(removeSamePizzas(cartItem));
   }
 
   return (
