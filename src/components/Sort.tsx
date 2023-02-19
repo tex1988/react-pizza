@@ -7,6 +7,10 @@ type SortItem = {
   sortType: string;
 };
 
+type PopupClick = MouseEvent & {
+  path: Node[];
+};
+
 export const sortList: SortItem[] = [
   { name: 'popularity', sortType: 'rating' },
   { name: 'price', sortType: 'price' },
@@ -17,7 +21,7 @@ function Sort(): ReactElement | null {
   const dispatch = useDispatch();
   const { currentSortItem } = useSelector(selectFilter);
   const sortRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setOpen] = useState<Boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(false);
 
   function sortOnClick(sortItem: SortItem): void {
     dispatch(setSort(sortItem));
@@ -25,8 +29,9 @@ function Sort(): ReactElement | null {
   }
 
   useEffect(() => {
-    function handleClick(event: any): void {
-      if (!event.composedPath().includes(sortRef.current)) {
+    function handleClick(event: MouseEvent): void {
+      const _event = event as PopupClick
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
       }
     }

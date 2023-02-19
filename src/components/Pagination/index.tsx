@@ -12,7 +12,7 @@ function Pagination({ onChangePage }: PaginationProps): ReactElement | null {
       className={styles.root}
       previousLabel={'<'}
       nextLabel={'>'}
-      pageCount={3}
+      pageCount={2}
       pageRangeDisplayed={8}
       onPageChange={(event) => onChangePage(event.selected + 1)}
     />

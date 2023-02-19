@@ -9,7 +9,8 @@ function CartBlock(): ReactElement | null {
   const dispatch = useDispatch();
 
   function onEraseClick(): void {
-    dispatch(clearPizzas);
+    // @ts-ignore
+    dispatch(clearPizzas());
   }
 
   return (
@@ -81,7 +82,7 @@ function CartBlock(): ReactElement | null {
       </div>
       <div className="content__items">
         {purchasePizzas.length > 0 &&
-          purchasePizzas.map((pizza: any) => <CartItem key={pizza.id} {...pizza} />)}
+          purchasePizzas.map((pizza: any, index: number) => <CartItem key={index} {...pizza} />)}
       </div>
       <div className="cart__bottom">
         <div className="cart__bottom-details">
