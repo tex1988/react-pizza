@@ -22,7 +22,7 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating
   const typeNames: string[] = ['standard', 'thin'];
   const dispatch = useDispatch();
 
-  function onClickAdd() {
+  function onClickAdd(): void {
     const pizza = {
       id,
       title,

@@ -19,13 +19,13 @@ function Sort(): ReactElement | null {
   const sortRef = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState<Boolean>(false);
 
-  function sortOnClick(sortItem: SortItem) {
+  function sortOnClick(sortItem: SortItem): void {
     dispatch(setSort(sortItem));
     setOpen(false);
   }
 
   useEffect(() => {
-    function handleClick(event: any) {
+    function handleClick(event: any): void {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }

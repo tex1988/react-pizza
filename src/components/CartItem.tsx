@@ -13,19 +13,10 @@ type CartItemProps = {
   count: number;
 };
 
-function CartItem({
-  id,
-  imageUrl,
-  title,
-  size,
-  type,
-  price,
-  totalPrice,
-  count,
-}: CartItemProps): ReactElement | null {
+function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count, }: CartItemProps): ReactElement | null {
   const dispatch = useDispatch();
 
-  function onClickAdd() {
+  function onClickAdd(): void {
     const pizza = {
       id,
       title,
@@ -37,7 +28,7 @@ function CartItem({
     dispatch(addPizza(pizza));
   }
 
-  function onClickRemove() {
+  function onClickRemove(): void {
     const pizza = {
       id,
       title,
@@ -49,7 +40,7 @@ function CartItem({
     dispatch(removePizza(pizza));
   }
 
-  function onClickRemoveSamePizzas() {
+  function onClickRemoveSamePizzas(): void {
     const pizza = {
       id,
       title,

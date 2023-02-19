@@ -8,7 +8,7 @@ function CartBlock(): ReactElement | null {
   const { purchasePizzas, totalPrice, totalCount } = useSelector(selectCart);
   const dispatch = useDispatch();
 
-  function onEraseClick() {
+  function onEraseClick(): void {
     dispatch(clearPizzas);
   }
 

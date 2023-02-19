@@ -13,7 +13,7 @@ function PizzaDescription(): ReactElement | null {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetch() {
+    async function fetch(): Promise<any> {
       try {
         const { data } = await axios.get(`${baseUrl}/pizza/${id}`);
         setPizza(data);

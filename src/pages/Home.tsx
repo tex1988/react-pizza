@@ -2,7 +2,7 @@ import Categories, { categoriesList } from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
-import { useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter, setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
@@ -10,7 +10,7 @@ import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
 
-function Home() {
+function Home(): ReactElement | null {
   const { categoryId, currentSortItem, currentPage, searchValue } = useSelector(selectFilter);
   const { pizzas, status } = useSelector(selectPizzas);
   const navigate = useNavigate();
