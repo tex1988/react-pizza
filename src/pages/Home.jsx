@@ -1,4 +1,4 @@
-import Categories, { categoriesList } from '../components/CategoriesList';
+import Categories, { categoriesList } from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';

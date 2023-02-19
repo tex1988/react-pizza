@@ -1,6 +1,13 @@
-export const categoriesList = ['All', 'Meet', 'Vegetarian', 'Grill', 'Spicy', 'Combined'];
+import { ReactElement } from 'react';
 
-function Categories({ value, onChangeCategory }) {
+type Props = {
+  value: number,
+  onChangeCategory: (id: number) => void
+}
+
+export const categoriesList: String[] = ['All', 'Meet', 'Vegetarian', 'Grill', 'Spicy', 'Combined'];
+
+function Categories({ value, onChangeCategory }: Props): ReactElement | null {
   return (
     <div className="categories">
       <ul>

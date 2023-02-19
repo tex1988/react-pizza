@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import img from '../../assets/img/empty-cart.png';
+import { ReactElement } from 'react';
 
-function EmptyCart() {
+function EmptyCart(): ReactElement | null {
   return (
     <div className="cart cart--empty">
       <h2>
-        Cart is empty <icon>😕</icon>
+        Cart is empty <span>😕</span>
       </h2>
       <p>
         It might be you not purchase pizza yet.

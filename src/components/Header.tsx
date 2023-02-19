@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
+import { ReactElement } from 'react';
 
-function Header() {
+function Header(): ReactElement | null {
   const { totalPrice, totalCount } = useSelector(selectCart);
   const location = useLocation();
 
