@@ -5,8 +5,9 @@ import Cart from './pages/Cart';
 import { Route, Routes } from 'react-router-dom';
 import PizzaDescription from './pages/PizzaDescription';
 import MainLayout from './layouts/MainLayout';
+import { ReactElement } from 'react';
 
-function App() {
+function App(): ReactElement | null {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>

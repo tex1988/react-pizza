@@ -1,11 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import axios from 'axios';
 import { baseUrl } from '../redux/slices/pizzaSlice';
 
-function PizzaDescription() {
+function PizzaDescription(): ReactElement | null {
   const { id } = useParams();
-  const [pizza, setPizza] = useState();
+  const [pizza, setPizza] = useState<{
+    imageUrl: string,
+    title: string,
+    price: number
+  }>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +26,7 @@ function PizzaDescription() {
     fetch();
   }, []);
 
-  if (!pizza) {
+  if (pizza === undefined) {
     return (
       <div className="container">
         <h2>Loading...</h2>
