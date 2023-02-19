@@ -1,14 +1,25 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPizza, selectCart, selectCartPurchasePizzas } from '../../redux/slices/cartSlice';
+import { addPizza, selectCart } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 
-function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
+type PizzaBlockProps = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: number;
+  rating: number;
+};
+
+function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating }: PizzaBlockProps): ReactElement | null {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [pizzaCount, setPizzaCount] = useState(0);
   const { purchasePizzas } = useSelector(selectCart);
-  const typeNames = ['standard', 'thin'];
+  const typeNames: string[] = ['standard', 'thin'];
   const dispatch = useDispatch();
 
   function onClickAdd() {
@@ -26,9 +37,9 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
 
   function getPizzaCount() {
     const filteredPizzas = purchasePizzas
-      .filter((pizza) => pizza.id === id)
-      .map((pizza) => pizza.count);
-    return filteredPizzas.length > 0 ? filteredPizzas.reduce((a, b) => a + b) : 0;
+      .filter((pizza: any) => pizza.id === id)
+      .map((pizza: any) => pizza.count);
+    return filteredPizzas.length > 0 ? filteredPizzas.reduce((a: number, b: number) => a + b) : 0;
   }
 
   useEffect(() => {
@@ -87,4 +98,4 @@ function Index({ id, imageUrl, title, types, sizes, price, category, rating }) {
   );
 }
 
-export default Index;
+export default PizzaBlock;

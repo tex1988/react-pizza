@@ -1,6 +1,7 @@
 import styles from './NotFoundBlock.module.scss';
+import { ReactElement } from 'react';
 
-function NotFoundBlock() {
+function NotFoundBlock(): ReactElement | null {
   return (
     <div className={styles.root}>
       <h1>

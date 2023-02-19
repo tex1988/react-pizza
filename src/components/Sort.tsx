@@ -15,7 +15,7 @@ export const sortList: SortItem[] = [
 
 function Sort(): ReactElement | null {
   const dispatch = useDispatch();
-  const { sort } = useSelector(selectFilter);
+  const { currentSortItem } = useSelector(selectFilter);
   const sortRef = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState<Boolean>(false);
 
@@ -50,7 +50,7 @@ function Sort(): ReactElement | null {
           />
         </svg>
         <b>Sort by:</b>
-        <span onClick={() => setOpen(!isOpen)}>{sort.name}</span>
+        <span onClick={() => setOpen(!isOpen)}>{currentSortItem.name}</span>
       </div>
       {isOpen && (
         <div className="sort__popup">
@@ -59,7 +59,7 @@ function Sort(): ReactElement | null {
               <li
                 key={index}
                 onClick={() => sortOnClick(sortItem)}
-                className={sort.sortType === sortItem.sortType ? 'active' : ''}>
+                className={currentSortItem.sortType === sortItem.sortType ? 'active' : ''}>
                 {sortItem.name}
               </li>
             ))}

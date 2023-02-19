@@ -11,37 +11,38 @@ import { useNavigate } from 'react-router-dom';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
 
 function Home() {
-  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
+  const { categoryId, currentSortItem, currentPage, searchValue } = useSelector(selectFilter);
   const { pizzas, status } = useSelector(selectPizzas);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMounted = useRef(false);
-  const sortType = sort.sortType;
+  const sortType = currentSortItem.sortType;
 
-  function onClickCategory(id) {
+  function onClickCategory(id: number): void {
     dispatch(setCategoryId(id));
   }
 
-  function onChangePage(Number) {
-    dispatch(setPage(Number));
+  function onChangePage(number: number): void {
+    dispatch(setPage(number));
   }
 
   function getPizzas() {
-    const params = {};
+    const params: any = {};
     categoryId > 0 && (params.category = categoryId);
     searchValue && (params.search = searchValue);
     params.sortBy = sortType;
     params.limit = 8;
     params.page = currentPage;
     params.order = 'desc';
+    // @ts-ignore
     dispatch(fetchPizzas(params));
   }
 
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.split('?').slice(-1)[0]);
-      const sort = sortList.find((sort) => sort.sortType === params.sortType);
-      dispatch(setFilters({ ...params, sort }));
+      const currentSortItem = sortList.find((sortItem) => sortItem.sortType === params.sortType);
+      dispatch(setFilters({ ...params, currentSortItem }));
     }
   }, []);
 
@@ -57,7 +58,7 @@ function Home() {
     isMounted.current = true;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const sortedPizzas = pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const sortedPizzas = pizzas.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />);
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
   return (

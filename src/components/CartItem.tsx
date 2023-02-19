@@ -1,7 +1,28 @@
 import { useDispatch } from 'react-redux';
 import { addPizza, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
+import { ReactElement } from 'react';
 
-function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count }) {
+type CartItemProps = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  size: number;
+  type: string;
+  price: number;
+  totalPrice: number;
+  count: number;
+};
+
+function CartItem({
+  id,
+  imageUrl,
+  title,
+  size,
+  type,
+  price,
+  totalPrice,
+  count,
+}: CartItemProps): ReactElement | null {
   const dispatch = useDispatch();
 
   function onClickAdd() {

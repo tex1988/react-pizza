@@ -2,13 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearPizzas, selectCart } from '../../redux/slices/cartSlice';
 import CartItem from '../CartItem';
 import { Link } from 'react-router-dom';
+import React, { ReactElement } from 'react';
 
-function CartBlock() {
+function CartBlock(): ReactElement | null {
   const { purchasePizzas, totalPrice, totalCount } = useSelector(selectCart);
   const dispatch = useDispatch();
 
   function onEraseClick() {
-    dispatch(clearPizzas());
+    dispatch(clearPizzas);
   }
 
   return (
@@ -80,7 +81,7 @@ function CartBlock() {
       </div>
       <div className="content__items">
         {purchasePizzas.length > 0 &&
-          purchasePizzas.map((pizza) => <CartItem key={pizza.id} {...pizza} />)}
+          purchasePizzas.map((pizza: any) => <CartItem key={pizza.id} {...pizza} />)}
       </div>
       <div className="cart__bottom">
         <div className="cart__bottom-details">
