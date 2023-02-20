@@ -97,7 +97,7 @@ function CartBlock(): ReactElement | null {
           </span>
           <span>
             {' '}
-            Purchase amount: <b>${totalPrice}</b>{' '}
+            Total price: <b>${totalPrice}</b>{' '}
           </span>
         </div>
         <div className="cart__bottom-buttons">

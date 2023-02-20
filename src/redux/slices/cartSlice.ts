@@ -74,6 +74,7 @@ export const cartSlice = createSlice({
           (pizza) => JSON.stringify(pizza) !== JSON.stringify(sameItem),
         );
         state.totalCount -= sameItem.count;
+        state.totalPrice -= sameItem.count * sameItem.price;
       }
     },
 
