@@ -5,22 +5,10 @@ import PizzaBlock from '../components/PizzaBlock';
 import { ReactElement, useEffect, useRef } from 'react';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
-import {
-  FilterSliceState,
-  selectFilter,
-  setCategoryId,
-  setFilters,
-  setPage,
-} from '../redux/slices/filterSlice';
+import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage, } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import {
-  fetchPizzas,
-  Pizza,
-  PizzaQueryParams,
-  selectPizzas,
-  Status,
-} from '../redux/slices/pizzaSlice';
+import { fetchPizzas, Pizza, PizzaQueryParams, selectPizzas, Status, } from '../redux/slices/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
 
 function Home(): ReactElement | null {

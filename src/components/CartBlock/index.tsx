@@ -10,7 +10,6 @@ function CartBlock(): ReactElement | null {
   const dispatch = useAppDispatch();
 
   function onEraseClick(): void {
-    // @ts-ignore
     dispatch(clearItems());
   }
 
