@@ -1,8 +1,9 @@
 import { ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPizza, CartItem, selectCart } from '../../redux/slices/cartSlice';
+import { addItem, CartItem, selectCart } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 import { Pizza } from '../../redux/slices/pizzaSlice';
+import { useAppDispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
 
 function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating }: Pizza): ReactElement | null {
   const [activeType, setActiveType] = useState(types[0]);
@@ -10,7 +11,7 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating
   const [pizzaCount, setPizzaCount] = useState(0);
   const { purchasePizzas } = useSelector(selectCart);
   const typeNames: string[] = ['standard', 'thin'];
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function onClickAdd(): void {
     const cartItem: CartItem = {
@@ -20,10 +21,9 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating
       imageUrl,
       type: typeNames[activeType],
       size: activeSize,
-      totalPrice: 0,
       count:0
     };
-    dispatch(addPizza(cartItem));
+    dispatch(addItem(cartItem));
     setPizzaCount(getPizzaCount() + 1);
   }
 

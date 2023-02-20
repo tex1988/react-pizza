@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { clearPizzas, selectCart } from '../../redux/slices/cartSlice';
+import { useSelector } from 'react-redux';
+import { clearItems, selectCart } from '../../redux/slices/cartSlice';
 import CartItemBlock from '../CartItemBlock';
 import { Link } from 'react-router-dom';
 import React, { ReactElement } from 'react';
-import { AppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 
 function CartBlock(): ReactElement | null {
   const { purchasePizzas, totalPrice, totalCount } = useSelector(selectCart);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   function onEraseClick(): void {
     // @ts-ignore
-    dispatch(clearPizzas());
+    dispatch(clearItems());
   }
 
   return (
@@ -83,7 +83,9 @@ function CartBlock(): ReactElement | null {
       </div>
       <div className="content__items">
         {purchasePizzas.length > 0 &&
-          purchasePizzas.map((pizza: any, index: number) => <CartItemBlock key={index} {...pizza} />)}
+          purchasePizzas.map((pizza: any, index: number) => (
+            <CartItemBlock key={index} {...pizza} />
+          ))}
       </div>
       <div className="cart__bottom">
         <div className="cart__bottom-details">

@@ -8,7 +8,6 @@ export type CartItem = {
   type: string;
   size: number;
   price: number;
-  totalPrice: number;
   count: number;
 };
 
@@ -24,11 +23,11 @@ const initialState: CartSliceState = {
   purchasePizzas: [],
 };
 
-function getSamePizza(state: CartSliceState, action: PayloadAction<CartItem>): CartItem | null {
-  const samePizza = state.purchasePizzas.find(
+function getSameItem(state: CartSliceState, action: PayloadAction<CartItem>): CartItem | null {
+  const sameItem = state.purchasePizzas.find(
     (pizza) => JSON.stringify(pizza, replacer) === JSON.stringify(action.payload, replacer),
   );
-  return samePizza ? samePizza as CartItem : null;
+  return sameItem ? sameItem as CartItem : null;
 }
 
 function replacer(key: string, value: any) {
@@ -41,48 +40,44 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addPizza(state: CartSliceState, action: PayloadAction<CartItem>): void {
-      const samePizza = getSamePizza(state, action);
-      if (samePizza) {
-        samePizza.count++;
-        samePizza.totalPrice += action.payload.price;
+    addItem(state: CartSliceState, action: PayloadAction<CartItem>): void {
+      const sameItem = getSameItem(state, action);
+      if (sameItem) {
+        sameItem.count++;
       } else {
         state.purchasePizzas.push(action.payload);
         state.purchasePizzas[state.purchasePizzas.length - 1].count = 1;
-        state.purchasePizzas[state.purchasePizzas.length - 1].totalPrice = action.payload.price;
       }
       state.totalPrice = state.totalPrice + action.payload.price;
       state.totalCount++;
     },
 
-    removePizza(state: CartSliceState, action: PayloadAction<CartItem>): void {
-      const samePizza: CartItem | null = getSamePizza(state, action);
-      if (samePizza) {
-        if (samePizza.count === 1) {
+    removeItem(state: CartSliceState, action: PayloadAction<CartItem>): void {
+      const sameItem: CartItem | null = getSameItem(state, action);
+      if (sameItem) {
+        if (sameItem.count === 1) {
           state.purchasePizzas = state.purchasePizzas.filter(
             (pizza) => pizza.id !== action.payload.id,
           );
         } else {
-          samePizza.totalPrice -= samePizza.price;
-          samePizza.count--;
+          sameItem.count--;
         }
       }
       state.totalPrice = state.totalPrice - action.payload.price;
       state.totalCount--;
     },
 
-    removeSamePizzas(state: CartSliceState, action: PayloadAction<CartItem>): void {
-      const samePizza: CartItem | null = getSamePizza(state, action);
-      if (samePizza) {
+    removeSameItems(state: CartSliceState, action: PayloadAction<CartItem>): void {
+      const sameItem: CartItem | null = getSameItem(state, action);
+      if (sameItem) {
         state.purchasePizzas = state.purchasePizzas.filter(
-          (pizza) => JSON.stringify(pizza) !== JSON.stringify(samePizza),
+          (pizza) => JSON.stringify(pizza) !== JSON.stringify(sameItem),
         );
-        state.totalPrice -= samePizza.totalPrice;
-        state.totalCount -= samePizza.count;
+        state.totalCount -= sameItem.count;
       }
     },
 
-    clearPizzas(state: CartSliceState): void {
+    clearItems(state: CartSliceState): void {
       state.purchasePizzas = [];
       state.totalPrice = 0;
       state.totalCount = 0;
@@ -94,6 +89,6 @@ export function selectCart(state: RootState): CartSliceState {
   return state.cart;
 }
 
-export const { addPizza, removePizza, removeSamePizzas, clearPizzas } = cartSlice.actions;
+export const { addItem, removeItem, removeSameItems, clearItems } = cartSlice.actions;
 
 export default cartSlice.reducer;

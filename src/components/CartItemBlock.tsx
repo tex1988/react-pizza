@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
-import { addPizza, CartItem, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
+import { addItem, CartItem, removeItem, removeSameItems } from '../redux/slices/cartSlice';
 import { ReactElement } from 'react';
+import { useAppDispatch } from '../redux/store';
 
-function CartItemBlock({ id, imageUrl, title, size, type, price, totalPrice, count, }: CartItem): ReactElement | null {
-  const dispatch = useDispatch();
+function CartItemBlock({ id, imageUrl, title, size, type, price, count, }: CartItem): ReactElement | null {
+  const dispatch = useAppDispatch();
+  const totalPrice = price * count;
   const cartItem: CartItem = {
     id: id,
     title: title,
@@ -12,19 +13,18 @@ function CartItemBlock({ id, imageUrl, title, size, type, price, totalPrice, cou
     type: type,
     size: size,
     count: count,
-    totalPrice: totalPrice,
   };
 
   function onClickAdd(): void {
-    dispatch(addPizza(cartItem));
+    dispatch(addItem(cartItem));
   }
 
   function onClickRemove(): void {
-    dispatch(removePizza(cartItem));
+    dispatch(removeItem(cartItem));
   }
 
   function onClickRemoveSamePizzas(): void {
-    dispatch(removeSamePizzas(cartItem));
+    dispatch(removeSameItems(cartItem));
   }
 
   return (

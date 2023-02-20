@@ -4,18 +4,30 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
 import { ReactElement, useEffect, useRef } from 'react';
 import Pagination from '../components/Pagination';
-import { useDispatch, useSelector } from 'react-redux';
-import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
+import { useSelector } from 'react-redux';
+import {
+  FilterSliceState,
+  selectFilter,
+  setCategoryId,
+  setFilters,
+  setPage,
+} from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { fetchPizzas, Pizza, PizzaQueryParams, selectPizzas } from '../redux/slices/pizzaSlice';
-import { AppDispatch } from '../redux/store';
+import {
+  fetchPizzas,
+  Pizza,
+  PizzaQueryParams,
+  selectPizzas,
+  Status,
+} from '../redux/slices/pizzaSlice';
+import { useAppDispatch } from '../redux/store';
 
 function Home(): ReactElement | null {
   const { categoryId, currentSortItem, currentPage, searchValue } = useSelector(selectFilter);
   const { pizzas, status } = useSelector(selectPizzas);
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const isMounted = useRef(false);
   const sortType = currentSortItem.sortType;
 
@@ -76,7 +88,7 @@ function Home(): ReactElement | null {
           <p> Please try again later</p>
         </div>
       ) : (
-        <div className="content__items">{status === 'loading' ? skeletons : sortedPizzas}</div>
+        <div className="content__items">{status === Status.LOADING ? skeletons : sortedPizzas}</div>
       )}
       <Pagination onChangePage={onChangePage} />
     </div>
