@@ -6,7 +6,7 @@ import React, { ReactElement } from 'react';
 import { useAppDispatch } from '../../redux/store';
 
 function CartBlock(): ReactElement | null {
-  const { purchasePizzas, totalPrice, totalCount } = useSelector(selectCart);
+  const { cartItems, totalPrice, totalCount } = useSelector(selectCart);
   const dispatch = useAppDispatch();
 
   function onEraseClick(): void {
@@ -81,8 +81,8 @@ function CartBlock(): ReactElement | null {
         </div>
       </div>
       <div className="content__items">
-        {purchasePizzas.length > 0 &&
-          purchasePizzas.map((pizza: any, index: number) => (
+        {cartItems.length > 0 &&
+          cartItems.map((pizza: any, index: number) => (
             <CartItemBlock key={index} {...pizza} />
           ))}
       </div>

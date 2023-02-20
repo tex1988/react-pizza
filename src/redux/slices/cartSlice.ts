@@ -14,17 +14,17 @@ export type CartItem = {
 interface CartSliceState {
   totalPrice: number;
   totalCount: number;
-  purchasePizzas: CartItem[];
+  cartItems: CartItem[];
 }
 
 const initialState: CartSliceState = {
   totalPrice: 0,
   totalCount: 0,
-  purchasePizzas: [],
+  cartItems: [],
 };
 
 function getSameItem(state: CartSliceState, action: PayloadAction<CartItem>): CartItem | null {
-  const sameItem = state.purchasePizzas.find(
+  const sameItem = state.cartItems.find(
     (item) => JSON.stringify(item, replacer) === JSON.stringify(action.payload, replacer),
   );
   return sameItem ? sameItem as CartItem : null;
@@ -45,8 +45,8 @@ export const cartSlice = createSlice({
       if (sameItem) {
         sameItem.count++;
       } else {
-        state.purchasePizzas.push(action.payload);
-        state.purchasePizzas[state.purchasePizzas.length - 1].count = 1;
+        state.cartItems.push(action.payload);
+        state.cartItems[state.cartItems.length - 1].count = 1;
       }
       state.totalPrice = state.totalPrice + action.payload.price;
       state.totalCount++;
@@ -56,7 +56,7 @@ export const cartSlice = createSlice({
       const sameItem: CartItem | null = getSameItem(state, action);
       if (sameItem) {
         if (sameItem.count === 1) {
-          state.purchasePizzas = state.purchasePizzas.filter(
+          state.cartItems = state.cartItems.filter(
             (item) => JSON.stringify(item, replacer) !== JSON.stringify(action.payload, replacer)
           );
         } else {
@@ -70,7 +70,7 @@ export const cartSlice = createSlice({
     removeSameItems(state: CartSliceState, action: PayloadAction<CartItem>): void {
       const sameItem: CartItem | null = getSameItem(state, action);
       if (sameItem) {
-        state.purchasePizzas = state.purchasePizzas.filter(
+        state.cartItems = state.cartItems.filter(
           (pizza) => JSON.stringify(pizza) !== JSON.stringify(sameItem),
         );
         state.totalCount -= sameItem.count;
@@ -78,7 +78,7 @@ export const cartSlice = createSlice({
     },
 
     clearItems(state: CartSliceState): void {
-      state.purchasePizzas = [];
+      state.cartItems = [];
       state.totalPrice = 0;
       state.totalCount = 0;
     },

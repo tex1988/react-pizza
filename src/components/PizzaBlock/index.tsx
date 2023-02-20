@@ -9,7 +9,7 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [pizzaCount, setPizzaCount] = useState(0);
-  const { purchasePizzas } = useSelector(selectCart);
+  const { cartItems } = useSelector(selectCart);
   const typeNames: string[] = ['standard', 'thin'];
   const dispatch = useAppDispatch();
 
@@ -28,10 +28,10 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating
   }
 
   function getPizzaCount() {
-    const filteredPizzas = purchasePizzas
+    const filteredCartItems = cartItems
       .filter((pizza: any) => pizza.id === id)
       .map((pizza: any) => pizza.count);
-    return filteredPizzas.length > 0 ? filteredPizzas.reduce((a: number, b: number) => a + b) : 0;
+    return filteredCartItems.length > 0 ? filteredCartItems.reduce((a: number, b: number) => a + b) : 0;
   }
 
   useEffect(() => {
