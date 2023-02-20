@@ -25,13 +25,13 @@ const initialState: CartSliceState = {
 
 function getSameItem(state: CartSliceState, action: PayloadAction<CartItem>): CartItem | null {
   const sameItem = state.purchasePizzas.find(
-    (pizza) => JSON.stringify(pizza, replacer) === JSON.stringify(action.payload, replacer),
+    (item) => JSON.stringify(item, replacer) === JSON.stringify(action.payload, replacer),
   );
   return sameItem ? sameItem as CartItem : null;
 }
 
 function replacer(key: string, value: any) {
-  if (key !== 'count' && key !== 'totalPrice') {
+  if (key !== 'count') {
     return value;
   }
 }
@@ -57,7 +57,7 @@ export const cartSlice = createSlice({
       if (sameItem) {
         if (sameItem.count === 1) {
           state.purchasePizzas = state.purchasePizzas.filter(
-            (pizza) => pizza.id !== action.payload.id,
+            (item) => JSON.stringify(item, replacer) !== JSON.stringify(action.payload, replacer)
           );
         } else {
           sameItem.count--;
