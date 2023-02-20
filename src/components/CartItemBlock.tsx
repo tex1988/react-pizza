@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { addPizza, ICartItem, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
+import { addPizza, CartItem, removePizza, removeSamePizzas } from '../redux/slices/cartSlice';
 import { ReactElement } from 'react';
 
-function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count, }: ICartItem): ReactElement | null {
+function CartItemBlock({ id, imageUrl, title, size, type, price, totalPrice, count, }: CartItem): ReactElement | null {
   const dispatch = useDispatch();
-  const cartItem: ICartItem = {
+  const cartItem: CartItem = {
     id: id,
     title: title,
     price: price,
@@ -101,4 +101,4 @@ function CartItem({ id, imageUrl, title, size, type, price, totalPrice, count, }
   );
 }
 
-export default CartItem;
+export default CartItemBlock;

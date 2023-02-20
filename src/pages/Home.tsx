@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { fetchPizzas, PizzaQueryParams, selectPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, Pizza, PizzaQueryParams, selectPizzas } from '../redux/slices/pizzaSlice';
+import { AppDispatch } from '../redux/store';
 
 function Home(): ReactElement | null {
   const { categoryId, currentSortItem, currentPage, searchValue } = useSelector(selectFilter);
   const { pizzas, status } = useSelector(selectPizzas);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isMounted = useRef(false);
   const sortType = currentSortItem.sortType;
 
@@ -53,14 +54,14 @@ function Home(): ReactElement | null {
 
   useEffect(() => {
     if (isMounted.current) {
-      const query = qs.stringify({ sortType, categoryId, searchValue, currentPage });
+      const query: string = qs.stringify({ sortType, categoryId, searchValue, currentPage });
       navigate(`?${query}`);
     }
     isMounted.current = true;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const sortedPizzas = pizzas.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />);
-  const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
+  const sortedPizzas: ReactElement[] = pizzas.map((pizza: Pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const skeletons: ReactElement[] = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
   return (
     <div className="container">

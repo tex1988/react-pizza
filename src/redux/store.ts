@@ -7,5 +7,6 @@ export const store = configureStore({
   reducer: { filter, cart, pizza },
 });
 
-type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export default store;

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SortItem } from '../../components/Sort';
+import { RootState } from '../store';
 
 export interface FilterSliceState {
   categoryId: number;
@@ -12,7 +13,7 @@ const initialState = {
   categoryId: 0,
   currentSortItem: { name: 'popularity', sortType: 'rating' },
   currentPage: 1,
-  searchValue: ''
+  searchValue: '',
 };
 
 export const filterSlice = createSlice({
@@ -40,10 +41,9 @@ export const filterSlice = createSlice({
   },
 });
 
-// @ts-ignore
-export function selectFilter(state) {
+export function selectFilter(state: RootState): FilterSliceState {
   return state.filter;
-};
+}
 
 export const { setCategoryId, setSort, setPage, setSearchValue, setFilters } = filterSlice.actions;
 
