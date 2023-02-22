@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { getCartStateFromLS } from '../../utils/getCartStateFromLS';
 
 export type CartItem = {
   id: number;
@@ -11,17 +12,13 @@ export type CartItem = {
   count: number;
 };
 
-interface CartSliceState {
+export interface CartSliceState {
   totalPrice: number;
   totalCount: number;
   cartItems: CartItem[];
 }
 
-const initialState: CartSliceState = {
-  totalPrice: 0,
-  totalCount: 0,
-  cartItems: [],
-};
+const initialState: CartSliceState = getCartStateFromLS();
 
 function getSameItem(state: CartSliceState, action: PayloadAction<CartItem>): CartItem | null {
   const sameItem = state.cartItems.find(
@@ -83,6 +80,12 @@ export const cartSlice = createSlice({
       state.totalPrice = 0;
       state.totalCount = 0;
     },
+
+    setCartState(state: CartSliceState, action: PayloadAction<CartSliceState>): void {
+      state.cartItems = action.payload.cartItems;
+      state.totalPrice = action.payload.totalPrice;
+      state.totalCount = action.payload.totalCount;
+    },
   },
 });
 
@@ -90,6 +93,6 @@ export function selectCart(state: RootState): CartSliceState {
   return state.cart;
 }
 
-export const { addItem, removeItem, removeSameItems, clearItems } = cartSlice.actions;
+export const { addItem, removeItem, removeSameItems, clearItems, setCartState } = cartSlice.actions;
 
 export default cartSlice.reducer;
