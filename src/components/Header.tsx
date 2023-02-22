@@ -2,9 +2,11 @@ import logoSvg from '../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 import { useSelector } from 'react-redux';
-import { CartSliceState, selectCart, setCartState } from '../redux/slices/cartSlice';
+import { setCartState } from '../redux/slices/cart/cartSlice';
 import { ReactElement, useEffect, useRef } from 'react';
 import { useAppDispatch } from '../redux/store';
+import { CartSliceState } from '../redux/slices/cart/types';
+import { selectCart } from '../redux/slices/cart/selector';
 
 function Header(): ReactElement | null {
   const { cartItems, totalPrice, totalCount } = useSelector(selectCart);

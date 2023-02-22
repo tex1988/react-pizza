@@ -5,11 +5,15 @@ import PizzaBlock from '../components/PizzaBlock';
 import { ReactElement, useCallback, useEffect, useRef } from 'react';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
-import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage, } from '../redux/slices/filterSlice';
+import { setCategoryId, setFilters, setPage, } from '../redux/slices/filter/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { fetchPizzas, Pizza, PizzaQueryParams, selectPizzas, Status, } from '../redux/slices/pizzaSlice';
+import { fetchPizzas,   } from '../redux/slices/pizza/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
+import { Pizza, PizzaQueryParams, Status } from '../redux/slices/pizza/types';
+import { FilterSliceState } from '../redux/slices/filter/types';
+import { selectFilter } from '../redux/slices/filter/selector';
+import { selectPizzas } from '../redux/slices/pizza/selector';
 
 function Home(): ReactElement | null {
   const { categoryId, currentSortItem, currentPage, searchValue } = useSelector(selectFilter);

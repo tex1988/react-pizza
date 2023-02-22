@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
-import { clearItems, selectCart } from '../../redux/slices/cartSlice';
+import { clearItems } from '../../redux/slices/cart/cartSlice';
 import CartItemBlock from '../CartItemBlock';
 import { Link } from 'react-router-dom';
 import React, { ReactElement } from 'react';
 import { useAppDispatch } from '../../redux/store';
+import { selectCart } from '../../redux/slices/cart/selector';
 
 function CartBlock(): ReactElement | null {
   const { cartItems, totalPrice, totalCount } = useSelector(selectCart);

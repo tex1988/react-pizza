@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReactElement, useEffect, useState } from 'react';
 import axios from 'axios';
-import { baseUrl } from '../redux/slices/pizzaSlice';
+import { baseUrl } from '../redux/slices/pizza/pizzaSlice';
 
 function PizzaDescription(): ReactElement | null {
   const { id } = useParams();

@@ -1,9 +1,11 @@
 import { ReactElement, useEffect, useState } from 'react';
-import { addItem, CartItem, selectCart } from '../../redux/slices/cartSlice';
+import { addItem } from '../../redux/slices/cart/cartSlice';
 import { Link } from 'react-router-dom';
-import { Pizza } from '../../redux/slices/pizzaSlice';
 import { useAppDispatch } from '../../redux/store';
 import { useSelector } from 'react-redux';
+import { Pizza } from '../../redux/slices/pizza/types';
+import { CartItem } from '../../redux/slices/cart/types';
+import { selectCart } from '../../redux/slices/cart/selector';
 
 function PizzaBlock({ id, imageUrl, title, types, sizes, price, category, rating }: Pizza): ReactElement | null {
   const [activeType, setActiveType] = useState(types[0]);

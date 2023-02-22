@@ -1,7 +1,8 @@
-import { addItem, CartItem, removeItem, removeSameItems } from '../redux/slices/cartSlice';
+import { addItem, removeItem, removeSameItems } from '../redux/slices/cart/cartSlice';
 import { ReactElement } from 'react';
 import { useAppDispatch } from '../redux/store';
 import clsx from 'clsx';
+import { CartItem } from '../redux/slices/cart/types';
 
 function CartItemBlock({
   id,
