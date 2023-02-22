@@ -2,7 +2,7 @@ import Categories, { categoriesList } from '../components/Categories';
 import Sort, { SortItem, sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
-import { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, useCallback, useEffect, useRef } from 'react';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
 import { FilterSliceState, selectFilter, setCategoryId, setFilters, setPage, } from '../redux/slices/filterSlice';
@@ -19,9 +19,9 @@ function Home(): ReactElement | null {
   const isMounted = useRef(false);
   const sortType = currentSortItem.sortType;
 
-  function onClickCategory(id: number): void {
+  const onChangeCategory = useCallback((id: number): void => {
     dispatch(setCategoryId(id));
-  }
+  }, []);
 
   function onChangePage(number: number): void {
     dispatch(setPage(number));
@@ -43,7 +43,9 @@ function Home(): ReactElement | null {
     if (window.location.search) {
       const params = qs.parse(window.location.search.split('?').slice(-1)[0]);
       const _currentSortItem = sortList.find((sortItem) => sortItem.sortType === params.sortType);
-      const currentSortItem: SortItem = _currentSortItem ? _currentSortItem as SortItem : sortList[0]
+      const currentSortItem: SortItem = _currentSortItem
+        ? (_currentSortItem as SortItem)
+        : sortList[0];
       dispatch(setFilters({ ...params, currentSortItem } as FilterSliceState));
     }
   }, []);
@@ -60,13 +62,15 @@ function Home(): ReactElement | null {
     isMounted.current = true;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const sortedPizzas: ReactElement[] = pizzas.map((pizza: Pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const sortedPizzas: ReactElement[] = pizzas.map((pizza: Pizza) => (
+    <PizzaBlock key={pizza.id} {...pizza} />
+  ));
   const skeletons: ReactElement[] = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={onClickCategory} />
+        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
         <Sort />
       </div>
       <h2 className="content__title">{categoriesList[categoryId]} pizzas</h2>

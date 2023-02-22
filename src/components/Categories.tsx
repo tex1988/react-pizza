@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { FC, memo, MemoExoticComponent, ReactElement } from 'react';
 
 type CategoriesProps = {
   value: number,
@@ -7,7 +7,7 @@ type CategoriesProps = {
 
 export const categoriesList: String[] = ['All', 'Meet', 'Vegetarian', 'Grill', 'Spicy', 'Combined'];
 
-function Categories({ value, onChangeCategory }: CategoriesProps): ReactElement | null {
+const Categories: FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
   return (
     <div className="categories">
       <ul>
@@ -22,6 +22,6 @@ function Categories({ value, onChangeCategory }: CategoriesProps): ReactElement 
       </ul>
     </div>
   );
-}
+});
 
 export default Categories;
